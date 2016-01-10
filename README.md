@@ -175,7 +175,7 @@ inc for 1
 
 #### `ok`
 
-A simple utility function to extract the value from `{:ok, result}` tuple and to raise the error in {:error, ErrorStruct}.
+A simple utility function to extract the value from `{:ok, result}` tuple and to raise the error in `{:error, ErrorStruct}`.
 
 ```elixir
 defmodule OkExample do
