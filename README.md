@@ -20,13 +20,14 @@ For more examples please check the tests here:
 
 Call `use Rop` into your module. That will give you access to following macros/functions:
 
-#### `>>>` - No need to stop pipelining in case of an error somewhere in the middle
+#### `>>>`
+No need to stop pipelining in case of an error somewhere in the middle
 
 
 used like: `1 |> fn1 >>> fn2 >>> fn3 >>> fn4`
 
 ```elixir
-defmodule A do
+defmodule TripleArrowExample do
   use Rop
   def tagged_inc(v) do
     IO.puts "inc for #{v}" # sideeffect for demonstration
@@ -54,7 +55,7 @@ defmodule A do
   end
 end
 
-iex> A.result
+iex> TripleArrowExample.result
 inc for 1
 inc for 2
 inc for 3
@@ -62,24 +63,24 @@ inc for 3
 
 ### increases twice, errors and tries to increase again
 ### notice that after errored result we don't execute any function anymore in the pipeline, e.g. only tagged_inc before error_fn were executed.
-iex> A.error_result
+iex> TripleArrowExample.error_result
 inc for 1
 inc for 2
 {:error, "I'm a bad fn!"}
 
-iex> A.raising_result
+### raises... We'll fix it in a later example for try_catch!
+iex> TripleArrowExample.raising_result
 inc for 1
 inc for 2
 ** (RuntimeError) I'm raising!
 ```
 
 
-
 #### `bind`
 Wraps a simple function to return a tagged tuple with `:ok` to comply to the protocol {:ok, result}: e.g.
 
 ```elixir
-defmodule B do
+defmodule BindExample do
   use Rop
   def inc(v) do
     v + 1
@@ -93,12 +94,45 @@ defmodule B do
     2 |> bind(inc) >>> bind(inc) >>> bind(inc)
   end
 end
-iex> B.only_last_pipe_tagged_result
+iex> BindExample.only_last_pipe_tagged_result
 {:ok, 4}
 
-iex> B.result_fully_tagged
+iex> BindExample.result_fully_tagged
 {:ok, 5}
 ´´´
+
+
+#### `try_catch`
+
+Wraps raising functions to return a tagged tuple {:error, ErrorMessage} to comply with the protocol
+
+```elixir
+# modified example from TripleArrowExample to handle raising functions
+defmodule TryCatchExample do
+  use Rop
+  def tagged_inc(v) do
+    IO.puts "inc for #{v}" # sideeffect for demonstration
+    {:ok, v + 1}
+  end
+
+  def raising_fn(_) do
+    raise "I'm raising!"
+  end
+
+  def result do
+    1 |> tagged_inc >>> tagged_inc >>> tagged_inc
+  end
+
+  def raising_result_wrapped do
+    1 |> tagged_inc >>> tagged_inc >>> try_catch(raising_fn) >>> tagged_inc
+  end
+end
+
+iex> TryCatchExample.raising_result_wrapped
+inc for 1
+inc for 2
+{:error, %RuntimeError{message: "I'm raising!"}}
+
 
 ## Installation
 
