@@ -3,11 +3,11 @@ defmodule Rop.Mixfile do
 
   def project do
     [app: :rop,
-     version: "1.0.0",
+     version: "0.5.0",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     package: package
+     package: package,
      deps: deps]
   end
 
