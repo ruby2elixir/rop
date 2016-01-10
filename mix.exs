@@ -7,6 +7,7 @@ defmodule Rop.Mixfile do
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     package: package
      deps: deps]
   end
 
@@ -29,4 +30,15 @@ defmodule Rop.Mixfile do
   defp deps do
     [{:ex_spec, "~> 1.0", only: :test}]
   end
+
+
+  defp package do
+    [
+     maintainers: ["Roman Heinrich"],
+     contributors: ["Remigiusz Jackowski", "Zohaib Rauf"],
+     licenses: ["MIT License"],
+     description: "Some convenient macros to enable railsway-oriented programming in Elixir",
+     links: %{github: "https://github.com/ruby2elixir/rop"}]
+  end
+
 end
