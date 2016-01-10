@@ -19,7 +19,11 @@ For more examples please check the tests here:
 ### Usage
 
 Call
-```use Rop```
+
+```elixir
+use Rop
+```
+
 in your module. That will give you access to following macros/functions:
 
 #### `>>>`
