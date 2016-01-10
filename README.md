@@ -68,6 +68,8 @@ inc for 2
 {:error, "I'm a bad fn!"}
 
 iex> A.raising_result
+inc for 1
+inc for 2
 ** (RuntimeError) I'm raising!
 ```
 
