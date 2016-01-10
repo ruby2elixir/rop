@@ -84,7 +84,7 @@ inc for 2
 
 
 #### `bind`
-Wraps a simple function to return a tagged tuple with `:ok` to comply to the protocol {:ok, result}: e.g.
+Wraps a simple function to return a tagged tuple with `:ok` to comply to the protocol `{:ok, result}`: e.g.
 
 ```elixir
 defmodule BindExample do
@@ -111,7 +111,7 @@ iex> BindExample.result_fully_tagged(2)
 
 #### `try_catch`
 
-Wraps raising functions to return a tagged tuple {:error, ErrorMessage} to comply with the protocol
+Wraps raising functions to return a tagged tuple `{:error, ErrorMessage} to comply with the protocol
 
 ```elixir
 # modified example from TripleArrowExample to handle raising functions
@@ -169,6 +169,41 @@ inc for 1
 inc for 1
 inc for 1
 {:ok, 1}
+```
+
+
+
+#### `ok`
+
+A simple utility function to extract the value from `{:ok, result}` tuple and to raise the error in {:error, ErrorStruct}.
+
+```elixir
+defmodule OkExample do
+  use Rop
+  def ok_result do
+    {:ok, 1} |> ok
+  end
+
+  def error_result do
+    {:error, %ArithmeticError{}} |> ok
+  end
+
+  def any_value_result do
+    "bad value" |> ok
+  end
+end
+
+iex> OkExample.ok_result
+1
+
+iex> OkExample.error_result
+** (ArithmeticError) bad argument in arithmetic expression
+    (rop) lib/rop.ex:70: Rop.ok/1
+
+
+iex> OkExample.any_value_result
+** (RuntimeError) bad value
+    (rop) lib/rop.ex:71: Rop.ok/1
 ```
 
 
