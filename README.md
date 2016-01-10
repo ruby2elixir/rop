@@ -106,7 +106,7 @@ iex> BindExample.only_last_pipe_tagged_result
 
 iex> BindExample.result_fully_tagged
 {:ok, 5}
-´´´
+```
 
 
 #### `try_catch`
