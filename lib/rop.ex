@@ -7,6 +7,35 @@ defmodule Rop do
       # include normal functions
       import Rop
 
+      @doc ~s"""
+        No need to stop pipelining in case of an error somewhere in the middle
+      """
+      defmacro left >>> right do
+        quote do
+          (fn ->
+            case unquote(left) do
+              {:ok, x} -> x |> unquote(right)
+              {:error, _} = expr -> expr
+            end
+          end).()
+        end
+      end
+
+      @doc ~s"""
+        Wraps a simple function to return a tagged tuple with `:ok` to comply to the protocol `{:ok, result}`
+      """
+      defmacro bind(args, func) do
+        quote do
+          (fn ->
+            result = unquote(args) |> unquote(func)
+            {:ok, result}
+          end).()
+        end
+      end
+
+      @doc ~s"""
+        Wraps raising functions to return a tagged tuple `{:error, ErrorMessage} to comply with the protocol
+      """
       defmacro try_catch(args, func) do
         quote do
           (fn ->
@@ -19,31 +48,17 @@ defmodule Rop do
         end
       end
 
+
+
+      @doc ~s"""
+        Like a similar Unix utility it does some work and returns the input.
+        See [tee (command), Unix](https://en.wikipedia.org/wiki/Tee_(command)).
+      """
       defmacro tee(args, func) do
         quote do
           (fn ->
             unquote(args) |> unquote(func)
             {:ok, unquote(args)}
-          end).()
-        end
-      end
-
-      defmacro bind(args, func) do
-        quote do
-          (fn ->
-            result = unquote(args) |> unquote(func)
-            {:ok, result}
-          end).()
-        end
-      end
-
-      defmacro left >>> right do
-        quote do
-          (fn ->
-            case unquote(left) do
-              {:ok, x} -> x |> unquote(right)
-              {:error, _} = expr -> expr
-            end
           end).()
         end
       end
