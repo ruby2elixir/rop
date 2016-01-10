@@ -42,7 +42,7 @@ defmodule RopTest do
       assert a.() == {:ok, 2}
     end
 
-    test "is calles the sideeffect in the function" do
+    test "the sideeffect in the function is executed" do
       a = (fn ->
         0 |> simple_inc |> simple_inc |> tee(simple_sideeffect)
       end)
