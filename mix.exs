@@ -1,9 +1,11 @@
 defmodule Rop.Mixfile do
   use Mix.Project
 
+  @version "0.5.0"
+
   def project do
     [app: :rop,
-     version: "0.5.0",
+     version: @version,
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -42,7 +44,11 @@ defmodule Rop.Mixfile do
      maintainers: ["Roman Heinrich", "Remigiusz Jackowski", "Zohaib Rauf"],
      licenses: ["MIT License"],
      description: "Some convenient macros to enable railsway-oriented programming in Elixir",
-     links: %{github: "https://github.com/ruby2elixir/rop"}]
+     links: %{
+       github: "https://github.com/ruby2elixir/rop",
+       docs: "http://hexdocs.pm/rop/#{@version}/"
+     }
+    ]
   end
 
 end
