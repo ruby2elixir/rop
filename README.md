@@ -142,6 +142,35 @@ inc for 2
 ```
 
 
+
+#### `tee`
+
+Like a similar Unix utility it does some work and returns the input. See [tee (command), Unix](https://en.wikipedia.org/wiki/Tee_(command)).
+
+
+
+```elixir
+defmodule TeeExample do
+  use Rop
+  def tagged_inc(v) do
+    IO.puts "inc for #{v}" # sideeffect for demonstration
+    {:ok, v + 1}
+  end
+
+  def result do
+    1 |> tee(tagged_inc) >>> tee(tagged_inc) >>> tee(tagged_inc)
+  end
+end
+
+## notice how the incremented value is not passed through the pipeline, but just the original argument `1`
+iex> TeeExample.result
+inc for 1
+inc for 1
+inc for 1
+{:ok, 1}
+```
+
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
