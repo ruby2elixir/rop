@@ -18,7 +18,9 @@ For more examples please check the tests here:
 
 ### Usage
 
-Call `use Rop` into your module. That will give you access to following macros/functions:
+Call
+```use Rop```
+in your module. That will give you access to following macros/functions:
 
 #### `>>>`
 No need to stop pipelining in case of an error somewhere in the middle
