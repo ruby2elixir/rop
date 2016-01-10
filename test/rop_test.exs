@@ -1,29 +1,30 @@
 defmodule RopTest do
   use ExSpec, async: true
-  use Rop
   import ExUnit.CaptureIO
+  use Rop
+  doctest Rop
 
 
   describe ">>> macro" do
     test "returns the piped value in case of happy path" do
-      assert (0 |> ok >>> ok >>> ok) == {:ok, 3}
+      assert (0 |> inc >>> inc >>> inc) == {:ok, 3}
     end
 
     test "returns the value of first error" do
-      assert (0 |> ok >>> error) == {:error, "Error at 1"}
+      assert (0 |> inc >>> error) == {:error, "Error at 1"}
     end
 
     test "propagates the error" do
-      assert (0 |> ok >>> error >>> ok >>> ok) == {:error, "Error at 1"}
+      assert (0 |> inc >>> error >>> inc >>> inc) == {:error, "Error at 1"}
     end
 
     test "propagates the correct error message" do
-      assert (0 |> ok >>> ok >>> error >>> error >>> ok) == {:error, "Error at 2"}
+      assert (0 |> inc >>> inc >>> error >>> error >>> inc) == {:error, "Error at 2"}
     end
   end
 
   describe "try_catch macro" do
-    test "catches raised errors, if something breaks" do
+    test "catches and returns raised errors in a tagged tupple { :error, %SomeError{} } if something breaks" do
       assert (:raise |> try_catch(arithmetic_error)) == {:error, %ArithmeticError{}}
     end
 
@@ -49,9 +50,9 @@ defmodule RopTest do
     end
   end
 
+  # returns an unrelated to passed-in arguments value + has a side-effect (logging)
   defp simple_sideeffect(a) do
     IO.inspect a
-    # return unrelated to passed in arguments value
     :unrelated
   end
 
@@ -59,7 +60,7 @@ defmodule RopTest do
     cnt + 1
   end
 
-  defp ok(cnt) do
+  defp inc(cnt) do
     {:ok, cnt + 1}
   end
 
