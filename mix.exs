@@ -8,6 +8,7 @@ defmodule Rop.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      package: package,
+     docs: [extras: ["README.md"]],
      deps: deps]
   end
 
@@ -28,7 +29,11 @@ defmodule Rop.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:ex_spec, "~> 1.0", only: :test}]
+    [
+      {:ex_spec, "~> 1.0", only: :test},
+      {:earmark, "~> 0.2", only: :dev},
+      {:ex_doc, "~> 0.11", only: :dev}
+    ]
   end
 
 

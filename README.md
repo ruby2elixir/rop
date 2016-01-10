@@ -11,13 +11,24 @@ For more examples please check the tests here:
 - [Examples](https://github.com/ruby2elixir/rop/blob/master/test/rop_test.exs)
 
 
-### Sources for inspiration + copying
-  - https://github.com/remiq/railway-oriented-programming-elixir
-  - https://gist.github.com/zabirauf/17ced02bdf9829b6956e (Railway Oriented Programming macros in Elixir)
+## Sources for inspiration + copying
+- https://github.com/remiq/railway-oriented-programming-elixir
+- https://gist.github.com/zabirauf/17ced02bdf9829b6956e (Railway Oriented Programming macros in Elixir)
 
 
-### Usage
+## Installation
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
+1. Add rop to your list of dependencies in `mix.exs`:
+```elixir
+def deps do
+  [{:rop, "~> 0.5.0"}]
+end
+```
+
+
+
+## Usage
 Call
 
 ```elixir
@@ -26,7 +37,7 @@ use Rop
 
 in your module. That will give you access to following macros/functions:
 
-#### `>>>`
+### `>>>`
 No need to stop pipelining in case of an error somewhere in the middle
 
 
@@ -83,7 +94,7 @@ inc for 2
 ```
 
 
-#### `bind`
+### `bind`
 Wraps a simple function to return a tagged tuple with `:ok` to comply to the protocol `{:ok, result}`: e.g.
 
 ```elixir
@@ -109,9 +120,9 @@ iex> BindExample.result_fully_tagged(2)
 ```
 
 
-#### `try_catch`
+### `try_catch`
 
-Wraps raising functions to return a tagged tuple `{:error, ErrorMessage} to comply with the protocol
+Wraps raising functions to return a tagged tuple `{:error, ErrorMessage}`  to comply with the protocol
 
 ```elixir
 # modified example from TripleArrowExample to handle raising functions
@@ -142,7 +153,6 @@ inc for 2
 ```
 
 
-
 #### `tee`
 
 Like a similar Unix utility it does some work and returns the input. See [tee (command), Unix](https://en.wikipedia.org/wiki/Tee_(command)).
@@ -162,18 +172,17 @@ defmodule TeeExample do
   end
 end
 
-## notice how the incremented value is not passed through the pipeline,
-## but just the original argument `1`
+# notice how the incremented value is not passed through the pipeline,
+# but just the original argument `1`
 iex> TeeExample.calc(1)
 inc for 1
 inc for 1
 inc for 1
-{:ok, 1}
+_{:ok, 1}
 ```
 
 
-
-#### `ok`
+### `ok`
 
 A simple utility function to extract the value from `{:ok, result}` tuple and to raise the error in `{:error, ErrorStruct}`.
 
@@ -207,35 +216,26 @@ iex> OkExample.any_value_result
 ```
 
 
-## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add rop to your list of dependencies in `mix.exs`:
-
-        def deps do
-          [{:rop, "~> 0.5.0"}]
-        end
-
+Background information
+----------------------
 
 ### Some discussions about Railsway programming:
-
-  - http://insights.workshop14.io/2015/10/18/handling-errors-in-elixir-no-one-say-monad.html
-  - http://blog.danielberkompas.com/2015/09/03/better-pipelines-with-monadex.html
-  - http://onor.io/2015/08/27/railway-oriented-programming-in-elixir/
-  - http://www.zohaib.me/railway-programming-pattern-in-elixir/
-  - http://www.zohaib.me/monads-in-elixir-2/
-  - http://fsharpforfunandprofit.com/posts/recipe-part2/
-  - https://www.reddit.com/r/programming/comments/30coly/railway_oriented_programming_in_elixir/
-
-
-### Code (Monads)
-
-  - https://github.com/rmies/monad.git
-  - https://github.com/rob-brown/MonadEx.git
+- http://insights.workshop14.io/2015/10/18/handling-errors-in-elixir-no-one-say-monad.html
+- http://blog.danielberkompas.com/2015/09/03/better-pipelines-with-monadex.html
+- http://onor.io/2015/08/27/railway-oriented-programming-in-elixir/
+- http://www.zohaib.me/railway-programming-pattern-in-elixir/
+- http://www.zohaib.me/monads-in-elixir-2/
+- http://fsharpforfunandprofit.com/posts/recipe-part2/
+- https://www.reddit.com/r/programming/comments/30coly/railway_oriented_programming_in_elixir/
 
 ### Code (Railsway Programming)
-  - https://github.com/remiq/railway-oriented-programming-elixir/blob/master/lib/rop.ex
-  - https://gist.github.com/zabirauf/17ced02bdf9829b6956e (Railway Oriented Programming macros in Elixir) -> Rop
-  - https://github.com/CrowdHailer/OK/blob/master/lib/ok.ex
-  - https://gist.github.com/danielberkompas/52216db76d764a68dfa3 -> pipeline.ex
+- https://github.com/remiq/railway-oriented-programming-elixir/blob/master/lib/rop.ex
+- https://gist.github.com/zabirauf/17ced02bdf9829b6956e (Railway Oriented Programming macros in Elixir) -> Rop
+- https://github.com/CrowdHailer/OK/blob/master/lib/ok.ex
+- https://gist.github.com/danielberkompas/52216db76d764a68dfa3 -> pipeline.ex
+
+### Code (Monads)
+- https://github.com/rmies/monad.git
+- https://github.com/rob-brown/MonadEx.git
