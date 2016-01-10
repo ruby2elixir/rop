@@ -93,18 +93,18 @@ defmodule BindExample do
     v + 1
   end
 
-  def only_last_pipe_tagged_result do
-    2 |> inc |> bind(inc)
+  def only_last_pipe_tagged_result(v) do
+    v |> inc |> bind(inc)
   end
 
-  def result_fully_tagged do
-    2 |> bind(inc) >>> bind(inc) >>> bind(inc)
+  def result_fully_tagged(v) do
+    v |> bind(inc) >>> bind(inc) >>> bind(inc)
   end
 end
-iex> BindExample.only_last_pipe_tagged_result
+iex> BindExample.only_last_pipe_tagged_result(2)
 {:ok, 4}
 
-iex> BindExample.result_fully_tagged
+iex> BindExample.result_fully_tagged(2)
 {:ok, 5}
 ```
 
@@ -130,12 +130,12 @@ defmodule TryCatchExample do
     1 |> tagged_inc >>> tagged_inc >>> tagged_inc
   end
 
-  def raising_result_wrapped do
-    1 |> tagged_inc >>> tagged_inc >>> try_catch(raising_fn) >>> tagged_inc
+  def raising_result_wrapped(v) do
+    v |> tagged_inc >>> tagged_inc >>> try_catch(raising_fn) >>> tagged_inc
   end
 end
 
-iex> TryCatchExample.raising_result_wrapped
+iex> TryCatchExample.raising_result_wrapped(1)
 inc for 1
 inc for 2
 {:error, %RuntimeError{message: "I'm raising!"}}
@@ -157,13 +157,14 @@ defmodule TeeExample do
     {:ok, v + 1}
   end
 
-  def result do
-    1 |> tee(tagged_inc) >>> tee(tagged_inc) >>> tee(tagged_inc)
+  def calc(v) do
+    v |> tee(tagged_inc) >>> tee(tagged_inc) >>> tee(tagged_inc)
   end
 end
 
-## notice how the incremented value is not passed through the pipeline, but just the original argument `1`
-iex> TeeExample.result
+## notice how the incremented value is not passed through the pipeline,
+## but just the original argument `1`
+iex> TeeExample.calc(1)
 inc for 1
 inc for 1
 inc for 1
