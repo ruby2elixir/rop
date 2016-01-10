@@ -4,6 +4,8 @@
 defmodule Rop do
   defmacro __using__(_) do
     quote do
+      # include normal functions
+      import Rop
 
       defmacro try_catch(args, func) do
         quote do
@@ -47,4 +49,24 @@ defmodule Rop do
       end
     end
   end
+
+
+  @doc ~s"""
+  Extracts the value from a tagged tuple like {:ok, value}
+  Raises the value from a tagged tuple like {:error, value}
+  Raise the arguments else
+
+  For example:
+      iex> ok({:ok, 1})
+      1
+
+      iex> ok({:error, "some"})
+      ** (RuntimeError) some
+
+      iex> ok({:anything, "some"})
+      ** (ArgumentError) raise/1 expects an alias, string or exception as the first argument, got: {:anything, "some"}
+  """
+  def ok({:ok, x}), do: x
+  def ok({:error, x}), do: raise x
+  def ok(x), do: raise x
 end
