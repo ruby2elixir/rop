@@ -243,3 +243,8 @@ Background information
 ### Code (Monads)
 - https://github.com/rmies/monad.git
 - https://github.com/rob-brown/MonadEx.git
+
+
+### Altenatives
+  - https://github.com/batate/elixir-pipes - Macros for more flexible composition with the Elixir Pipe operator
+
