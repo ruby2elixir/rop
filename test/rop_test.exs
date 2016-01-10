@@ -50,22 +50,29 @@ defmodule RopTest do
     end
   end
 
+  describe "bind" do
+    test "wraps a function to return a tagged tuple `{:ok, result}` from the returned value" do
+      a = 0 |> simple_inc |> bind(simple_inc)
+      assert a == {:ok, 2}
+    end
+  end
+
   # returns an unrelated to passed-in arguments value + has a side-effect (logging)
   defp simple_sideeffect(a) do
     IO.inspect a
     :unrelated
   end
 
-  def simple_inc(cnt) do
+  defp inc(cnt) do
+    {:ok, simple_inc(cnt)}
+  end
+
+  defp simple_inc(cnt) do
     cnt + 1
   end
 
-  defp inc(cnt) do
-    {:ok, cnt + 1}
-  end
-
-  defp error(cnt) do
-    {:error, "Error at #{cnt}"}
+  defp error(v) do
+    {:error, "Error at #{v}"}
   end
 
   defp arithmetic_error(:pass) do
