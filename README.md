@@ -26,7 +26,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 1. Add rop to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
-  [{:rop, "~> 0.5.0"}]
+  [{:rop, "~> 0.5"}]
 end
 ```
 
