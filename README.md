@@ -139,6 +139,7 @@ iex> TryCatchExample.raising_result_wrapped
 inc for 1
 inc for 2
 {:error, %RuntimeError{message: "I'm raising!"}}
+```
 
 
 ## Installation
