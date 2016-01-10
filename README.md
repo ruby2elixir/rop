@@ -68,7 +68,8 @@ inc for 3
 {:ok, 4}
 
 ### increases twice, errors and tries to increase again
-### notice that after errored result we don't execute any function anymore in the pipeline, e.g. only tagged_inc before error_fn were executed.
+### notice that after errored result we don't execute any function anymore in the pipeline,
+### e.g. only tagged_inc before error_fn were executed.
 iex> TripleArrowExample.error_result
 inc for 1
 inc for 2
