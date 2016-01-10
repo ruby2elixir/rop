@@ -1,9 +1,10 @@
 # ROP - Railway Oriented Programming in Elixir
 
-----
+
 [![Build Status](https://travis-ci.org/ruby2elixir/rop.png)](https://travis-ci.org/ruby2elixir/rop)
 ![Hex version](https://img.shields.io/hexpm/v/rop.svg "Hex version")](https://hex.pm/packages/rop)
 ![Hex downloads](https://img.shields.io/hexpm/dt/rop.svg "Hex downloads")
+----
 
 
 Some macros to enable railsway-oriented programming in Elixir.
