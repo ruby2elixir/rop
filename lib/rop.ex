@@ -31,6 +31,11 @@ defmodule Rop do
 
   @doc ~s"""
     No need to stop pipelining in case of an error somewhere in the middle
+
+    Example:
+      iex> inc = fn(x)-> {:ok, x+1} end
+      iex> 1 |> (inc).() >>> (inc).()
+      {:ok, 3}
   """
   defmacro left >>> right do
     quote do
@@ -45,6 +50,19 @@ defmodule Rop do
 
   @doc ~s"""
     Wraps a simple function to return a tagged tuple with `:ok` to comply to the protocol `{:ok, result}`
+
+    Example:
+      iex> 1 |> Integer.to_string
+      "1"
+      iex> 1 |> bind(Integer.to_string)
+      {:ok, "1"}
+
+
+      iex> inc = fn(x)-> x+1 end
+      iex> 1 |> bind((inc).()) >>> (inc).()
+      3
+      iex> 1 |> bind((inc).()) >>> bind((inc).())
+      {:ok, 3}
   """
   defmacro bind(args, func) do
     quote do
@@ -57,6 +75,12 @@ defmodule Rop do
 
   @doc ~s"""
     Wraps raising functions to return a tagged tuple `{:error, ErrorMessage}` to comply with the protocol
+
+    Example:
+      iex> r = fn(_)-> raise "some" end
+      iex> inc = fn(x)-> x + 1 end
+      iex> 1 |> bind((inc).()) >>> try_catch((r).()) >>> bind((inc).())
+      {:error, %RuntimeError{message: "some"}}
   """
   defmacro try_catch(args, func) do
     quote do
@@ -75,6 +99,11 @@ defmodule Rop do
   @doc ~s"""
     Like a similar Unix utility it does some work and returns the input.
     See [tee (command), Unix](https://en.wikipedia.org/wiki/Tee_(command)).
+
+    Example:
+      iex> inc = fn(x)-> IO.inspect(x); {:ok, x + 1} end
+      iex> 1 |> tee((inc).()) >>> tee((inc).()) >>> tee((inc).())
+      {:ok, 1}
   """
   defmacro tee(args, func) do
     quote do
