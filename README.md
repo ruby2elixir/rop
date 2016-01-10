@@ -1,6 +1,8 @@
 # ROP - Railway Oriented Programming in Elixir
 
 
+[![Build Status](https://travis-ci.org/ruby2elixir/rop.png)](https://travis-ci.org/ruby2elixir/rop)
+
 
 ## Installation
 
