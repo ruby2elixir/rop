@@ -34,8 +34,7 @@ defmodule Rop.Mixfile do
 
   defp package do
     [
-     maintainers: ["Roman Heinrich"],
-     contributors: ["Remigiusz Jackowski", "Zohaib Rauf"],
+     maintainers: ["Roman Heinrich", "Remigiusz Jackowski", "Zohaib Rauf"],
      licenses: ["MIT License"],
      description: "Some convenient macros to enable railsway-oriented programming in Elixir",
      links: %{github: "https://github.com/ruby2elixir/rop"}]
