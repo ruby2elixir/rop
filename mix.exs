@@ -9,9 +9,9 @@ defmodule Rop.Mixfile do
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     package: package,
+     package: package(),
      docs: [extras: ["README.md"]],
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application
