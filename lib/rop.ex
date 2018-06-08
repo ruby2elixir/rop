@@ -108,8 +108,9 @@ defmodule Rop do
   defmacro tee(args, func) do
     quote do
       (fn ->
-        unquote(args) |> unquote(func)
-        {:ok, unquote(args)}
+        unquoted_args = unquote(args)
+        unquoted_args |> unquote(func)
+        {:ok, unquoted_args}
       end).()
     end
   end
