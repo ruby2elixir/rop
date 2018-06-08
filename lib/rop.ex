@@ -22,7 +22,7 @@ defmodule Rop do
       ** (RuntimeError) some
 
       iex> ok({:anything, "some"})
-      ** (ArgumentError) raise/1 expects an alias, string or exception as the first argument, got: {:anything, "some"}
+      ** (ArgumentError) raise/1 and reraise/2 expect a module name, string or exception as the first argument, got: {:anything, \"some\"}
   """
   def ok({:ok, x}), do: x
   def ok({:error, x}), do: raise x
