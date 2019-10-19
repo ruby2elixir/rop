@@ -15,19 +15,28 @@ defmodule Rop do
   Raise the arguments else
 
   For example:
-      iex> ok({:ok, 1})
+      iex> do_try({:ok, 1})
       1
 
-      iex> ok({:error, "some"})
+      iex> do_try({:error, "some"})
       ** (RuntimeError) some
 
-      iex> ok({:anything, "some"})
+      iex> do_try({:anything, "some"})
       ** (ArgumentError) raise/1 and reraise/2 expect a module name, string or exception as the first argument, got: {:anything, \"some\"}
   """
-  def ok({:ok, x}), do: x
-  def ok({:error, x}), do: raise x
-  def ok(x), do: raise x
+  def do_try({:ok, x}), do: x
+  def do_try({:error, x}), do: raise x
+  def do_try(x), do: raise x
 
+  @doc ~s"""
+    Wraps the value in an ok tagged tuple like {:ok, value}
+  """
+  def ok(x), do: {:ok, x}
+
+  @doc ~s"""
+    Wraps the value in an error tagged tuple like {:error, value}
+  """
+  def err(x), do: {:error, x}
 
   @doc ~s"""
     No need to stop pipelining in case of an error somewhere in the middle
