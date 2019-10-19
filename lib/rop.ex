@@ -31,6 +31,8 @@ defmodule Rop do
   @doc ~s"""
     Wraps the value in an ok tagged tuple like {:ok, value}
   """
+  def ok({:ok, x}), do: {:ok, x}
+  def ok({:error, x}), do: {:error, x}
   def ok(x), do: {:ok, x}
 
   @doc ~s"""
