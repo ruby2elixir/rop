@@ -5,7 +5,7 @@ defmodule RopTest do
   doctest Rop
 
 
-  ExSpec.describe ">>> macro" do
+  describe ">>> macro" do
     test "returns the piped value in case of happy path" do
       assert (0 |> inc >>> inc >>> inc) == {:ok, 3}
     end
@@ -23,17 +23,17 @@ defmodule RopTest do
     end
   end
 
-  ExSpec.describe "try_catch macro" do
+  describe "try_catch macro" do
     test "catches and returns raised errors in a tagged tupple { :error, %SomeError{} } if something breaks" do
       assert (:raise |> try_catch(arithmetic_error)) == {:error, %ArithmeticError{}}
     end
 
-    test "returns the value otherwise" do
-      assert (:pass |> try_catch(arithmetic_error)) == 1
+    test "returns the piped value otherwise" do
+      assert (:pass |> try_catch(arithmetic_error)) == {:ok, 1}
     end
   end
 
-  ExSpec.describe "tee" do
+  describe "tee" do
     test "passes the arguments through after executing them in the function" do
       a = (fn ->
         0 |> simple_inc |> simple_inc |> tee(simple_sideeffect)
@@ -50,7 +50,7 @@ defmodule RopTest do
     end
   end
 
-  ExSpec.describe "bind" do
+  describe "bind" do
     test "wraps a function to return a tagged tuple `{:ok, result}` from the returned value" do
       a = 0 |> simple_inc |> bind(simple_inc)
       assert a == {:ok, 2}
@@ -80,6 +80,6 @@ defmodule RopTest do
   end
 
   defp arithmetic_error(:raise) do
-    1 / 0
+    raise ArithmeticError
   end
 end
