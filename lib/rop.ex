@@ -97,7 +97,7 @@ defmodule Rop do
     quote do
       (fn ->
         try do
-          unquote(args) |> unquote(func)
+          {:ok, unquote(args) |> unquote(func)}
         rescue
           e -> {:error, e}
         end
