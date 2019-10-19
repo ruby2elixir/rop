@@ -28,8 +28,8 @@ defmodule RopTest do
       assert (:raise |> try_catch(arithmetic_error)) == {:error, %ArithmeticError{}}
     end
 
-    test "returns the value otherwise" do
-      assert (:pass |> try_catch(arithmetic_error)) == 1
+    test "returns the piped value otherwise" do
+      assert (:pass |> try_catch(arithmetic_error)) == {:ok, 1}
     end
   end
 
